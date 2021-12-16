@@ -2,7 +2,17 @@
   <div class="days">
     <div class="day-title">{{ day }}</div>
     <div class="day-content">
-      <recruit-ment></recruit-ment>
+      <recruit-ment
+        v-for="(re, index) in state.recruit"
+        :key="index"
+        :id="re.id"
+        :name="re.name"
+        :content="re.content"
+        :image="re.image"
+        :start_time="re.start_time"
+        :end_time="re.end_time"
+        :state="re.state"
+      ></recruit-ment>
     </div>
   </div>
 </template>

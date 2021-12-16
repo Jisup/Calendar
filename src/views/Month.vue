@@ -2,7 +2,7 @@
   <div class="calendar">
     <div class="calendar-title">
       <div class="calendar-title-prev-btn" @click="prevBtn">&lt;</div>
-      <div class="calendar-title-date">2021.09</div>
+      <div class="calendar-title-date">{{ state.year }}</div>
       <div class="calendar-title-next-btn" @click="nextBtn">&gt;</div>
     </div>
     <div class="month">
@@ -18,7 +18,7 @@
       <div class="daylist">
         <day-s
           v-for="(data, index) in state.datas"
-          :key="index"
+          :key="'days' + index"
           :year="data.year"
           :month="data.month"
           :day="data.day"
@@ -44,10 +44,18 @@ export default {
   setup() {
     const store = useStore();
     const state = reactive({
+      year: "",
       days: [],
       datas: [],
     });
     const _today = new Date("2021-09-01"); // 현재 날짜
+    const _today_month = _today.getMonth() + 1; // 현재 월
+    state.year =
+      _today.getFullYear() +
+      "." +
+      (_today_month < 10 ? "0" + _today_month : _today_month);
+    store.commit("root/setToday", _today);
+    store.commit("root/setSelectDay", _today);
     const _ary_month = [
       "Jan",
       "Feb",
@@ -65,6 +73,7 @@ export default {
 
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 날짜 넣기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     const setDays = (_today) => {
+      state.days = [];
       const _today_year = _today.getFullYear(); // 현재 년도 가져오기
       const _today_month = _today.getMonth() + 1; // 현재 월 가져오기
       const _today_first = new Date(_today_year, _today_month - 1, 1); // 현재 월 1일
@@ -146,6 +155,7 @@ export default {
     });
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 데이터 셋 불러오기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     const setDaysData = () => {
+      state.datas = [];
       state.days.forEach((_item) => {
         let _item_month = _item.month < 10 ? "0" + _item.month : _item.month;
         let _item_day = _item.day < 10 ? "0" + _item.day : _item.day;
@@ -171,8 +181,45 @@ export default {
         state.datas.push(_day_data);
       });
     };
+    const prevBtn = () => {
+      let _now_month = store.getters["root/getSelectDay"];
+      let _now_prev_year = _now_month.getFullYear();
+      let _now_prev_month = _now_month.getMonth();
+      if (_now_prev_month == 0) {
+        _now_prev_year -= 1;
+        _now_prev_month = 12;
+      }
+      _now_prev_month =
+        _now_prev_month > 9 ? _now_prev_month : "0" + _now_prev_month;
+      let _now_prev_date = new Date(
+        _now_prev_year + "-" + _now_prev_month + "-" + "01"
+      );
+      state.year = _now_prev_year + "." + _now_prev_month;
+      setDays(_now_prev_date);
+      setDaysData();
+      store.commit("root/setSelectDay", _now_prev_date);
+    };
 
-    return { state, setDaysData };
+    const nextBtn = () => {
+      let _now_month = store.getters["root/getSelectDay"];
+      let _now_next_year = _now_month.getFullYear();
+      let _now_next_month = _now_month.getMonth() + 2;
+      if (_now_next_month > 12) {
+        _now_next_year += 1;
+        _now_next_month = 1;
+      }
+      _now_next_month =
+        _now_next_month > 9 ? _now_next_month : "0" + _now_next_month;
+      let _now_next_date = new Date(
+        _now_next_year + "-" + _now_next_month + "-" + "01"
+      );
+      state.year = _now_next_year + "." + _now_next_month;
+      setDays(_now_next_date);
+      setDaysData();
+      store.commit("root/setSelectDay", _now_next_date);
+    };
+
+    return { state, setDaysData, prevBtn, nextBtn };
   },
 };
 </script>

@@ -4,7 +4,7 @@
     <div class="day-content">
       <recruit-ment
         v-for="(re, index) in state.recruit"
-        :key="index"
+        :key="'re' + index"
         :id="re.id"
         :name="re.name"
         :content="re.content"
@@ -19,7 +19,7 @@
 <script>
 import "@/style/Day.scss";
 import RecruitMent from "./components/Recruitment.vue";
-import { reactive } from "@vue/reactivity";
+import { reactive, watch } from "vue";
 export default {
   name: "day",
   components: {
@@ -64,8 +64,26 @@ export default {
     };
     setRecruit(props.start, "시");
     setRecruit(props.end, "끝");
+    /* 
+        Maximum recursive updates exceeded in component<day>. This means you
+        have a reactive effect that is mutating its own dependencies and thus
+        recursively triggering itself. Possible sources include component template,
+        updated hook or watcher source function
+    */
+    // onUpdated(() => {
+    //   state.recruit = [];
+    //   setRecruit(props.start, "시");
+    //   setRecruit(props.end, "끝");
+    // });
+    watch(
+      () => [props.start, props.end],
+      () => {
+        state.recruit = [];
+        setRecruit(props.start, "시");
+        setRecruit(props.end, "끝");
+      }
+    );
 
-    console.log(state.recruit);
     return {
       state,
     };

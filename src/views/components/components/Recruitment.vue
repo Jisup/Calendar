@@ -13,9 +13,7 @@ export default {
     end_time: String,
     state: String,
   },
-  setup(props) {
-    console.log(props);
-  },
+  setup() {},
 };
 </script>
 <style lang=""></style>

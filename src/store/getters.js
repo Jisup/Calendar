@@ -1,3 +1,9 @@
+export function getToday(state) {
+  return state.today;
+}
+export function getSelectDay(state) {
+  return state.select_day;
+}
 export function getMonthJan(state) {
   return state.Jan;
 }

@@ -16,7 +16,16 @@
         <div class="day">토</div>
       </div>
       <div class="daylist">
-        <day-s v-for="(day, index) in 31" :key="index" :date="day"> </day-s>
+        <day-s
+          v-for="(data, index) in state.datas"
+          :key="index"
+          :year="data.year"
+          :month="data.month"
+          :day="data.day"
+          :start="data.start"
+          :end="data.end"
+        >
+        </day-s>
       </div>
     </div>
   </div>

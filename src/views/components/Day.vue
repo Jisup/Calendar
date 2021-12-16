@@ -1,6 +1,6 @@
 <template>
   <div class="days">
-    <div class="day-title">{{ date }}</div>
+    <div class="day-title">{{ day }}</div>
     <div class="day-content">뭐가들어갈까요??</div>
   </div>
 </template>
@@ -9,10 +9,14 @@ import "@/style/Day.scss";
 export default {
   name: "day",
   props: {
-    date: Number,
+    year: Number,
+    month: Number,
+    day: Number,
+    start: Array,
+    end: Array,
   },
   setup(props) {
-    console.log(props.date);
+    console.log(props);
   },
 };
 </script>

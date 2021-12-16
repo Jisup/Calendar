@@ -60,45 +60,59 @@ export default {
       const _today_first = new Date(_today_year, _today_month - 1, 1); // 현재 월 1일
       const _today_day_last = new Date(_today_year, _today_month, 0); // 현재 월 마지막일
       const _prev_day_last = new Date(_today_year, _today_month - 1, 0); // 현재 전월 마지막일
-
-      console.log(_today_month);
-
-      const _prev_month_data = "";
-      const _today_month_data = "";
-      const _next_month_data = "";
-
-      for (
-        let i = _today_first.getDate();
-        i <= _today_day_last.getDate();
-        i++
-      ) {
-        state.days.push(i); // 전체 일 수 날짜 넣기
+      // 전체 일 수 날짜 넣기
+      for (let i = 1; i <= _today_day_last.getDate(); i++) {
+        let data = {
+          year: _today_year,
+          month: _today_month,
+          day: i,
+        };
+        state.days.push(data);
       }
+      // 모자란 앞 일 채우기
       for (let i = 0; i < _today_first.getDay(); i++) {
-        state.days.unshift(_prev_day_last.getDate() - i); // 모자란 앞 일 채우기
+        let _prev_year = _today_year;
+        let _prev_month = _today_month - 1;
+        if (_prev_month < 1) {
+          _prev_year = _today_year - 1;
+          _prev_month = 12;
+        }
+        let data = {
+          year: _prev_year,
+          month: _prev_month,
+          day: _prev_day_last.getDate() - i,
+        };
+        state.days.unshift(data);
       }
+      // 모자란 뒷 일 채우기
       for (let i = 1; i <= 6 - _today_day_last.getDay(); i++) {
-        state.days.push(i); // 모자란 뒷 일 채우기
+        let _next_year = _today_year;
+        let _next_month = _today_month + 1;
+        if (_next_month > 12) {
+          _next_year = _today_year + 1;
+          _next_month = 1;
+        }
+        let data = {
+          year: _next_year,
+          month: _next_month,
+          day: i,
+        };
+        state.days.push(data);
       }
       console.log(state.days);
     };
     setDays(_today);
 
-    // 1. 일수에 맞춰서 데이터 넣기
-    // 2. 어떻게 넣을꺼니?
-    // 3. [{ year: year, month: month, day:day, start, end}]
-
     onMounted(() => {
       //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 데이터 셋 저장하기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
       const setRecruitmentData = (_recruitment_data) => {
         const _now_year = _today.getFullYear();
-        const _set_dates = [];
+        const _set_date = [];
         for (let i = 1; i <= 12; i++) {
           i > 9
-            ? _set_dates.push([_ary_month[i - 1], _now_year + "-" + i])
-            : _set_dates.push([_ary_month[i - 1], _now_year + "-0" + i]);
+            ? _set_date.push([_ary_month[i - 1], _now_year + "-" + i])
+            : _set_date.push([_ary_month[i - 1], _now_year + "-0" + i]);
         }
-        console.log(_set_dates);
         for (let i = 0; i < _set_date.length; i++) {
           const _month_start = _recruitment_data.filter((_item) => {
             return _item.start_time.includes(_set_date[i][1]);
@@ -109,7 +123,6 @@ export default {
           store.commit("root/setMonth" + _set_date[i][0], {
             start: _month_start,
             end: _month_end,
-            year: _now_year,
           });
         }
       };
@@ -120,6 +133,19 @@ export default {
         });
       };
       getRecruitmentData();
+
+      // const _prev_month_data =
+      //   store.getters["root/getMonth" + _ary_month[_today_month - 1]];
+      // const _today_month_data =
+      //   store.getters["root/getMonth" + _ary_month[_today_month - 1]];
+      // const _next_month_data =
+      //   store.getters["root/getMonth" + _ary_month[_today_month + 1]];
+
+      // console.log(_today_month_data);
+
+      // 1. 일수에 맞춰서 데이터 넣기
+      // 2. 어떻게 넣을꺼니?
+      // 3. [{ year: year, month: month, day:day, start, end}]
     });
 
     return { state };

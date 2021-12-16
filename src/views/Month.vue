@@ -36,8 +36,9 @@ export default {
     const store = useStore();
     const state = reactive({
       days: [],
+      datas: [],
     });
-    const _today = new Date(); // 현재 날짜
+    const _today = new Date("2021-09-01"); // 현재 날짜
     const _ary_month = [
       "Jan",
       "Feb",
@@ -130,25 +131,43 @@ export default {
       const getRecruitmentData = async () => {
         await store.dispatch("root/getRecruitmentData").then((response) => {
           setRecruitmentData(response.data);
+          setDaysData();
         });
       };
       getRecruitmentData();
-
-      // const _prev_month_data =
-      //   store.getters["root/getMonth" + _ary_month[_today_month - 1]];
-      // const _today_month_data =
-      //   store.getters["root/getMonth" + _ary_month[_today_month - 1]];
-      // const _next_month_data =
-      //   store.getters["root/getMonth" + _ary_month[_today_month + 1]];
-
-      // console.log(_today_month_data);
-
+    });
+    const setDaysData = () => {
       // 1. 일수에 맞춰서 데이터 넣기
       // 2. 어떻게 넣을꺼니?
       // 3. [{ year: year, month: month, day:day, start, end}]
-    });
+      state.days.forEach((_item) => {
+        let _item_month = _item.month < 10 ? "0" + _item.month : _item.month;
+        let _item_day = _item.day < 10 ? "0" + _item.day : _item.day;
+        let _month_data =
+          store.getters["root/getMonth" + _ary_month[_item.month - 1]];
+        let _day_start_data = _month_data.start.filter((_month_item) => {
+          return _month_item.start_time.includes(
+            _item.year + "-" + _item_month + "-" + _item_day
+          );
+        });
+        let _day_end_data = _month_data.end.filter((_month_item) => {
+          return _month_item.end_time.includes(
+            _item.year + "-" + _item_month + "-" + _item_day
+          );
+        });
+        let _day_data = {
+          year: _item.year,
+          month: _item.month,
+          day: _item.day,
+          start: _day_start_data,
+          end: _day_end_data,
+        };
+        state.datas.push(_day_data);
+      });
+      console.log(state.datas);
+    };
 
-    return { state };
+    return { state, setDaysData };
   },
 };
 </script>

@@ -24,11 +24,24 @@
 
 <script>
 import "@/style/Month.css";
+import { onMounted } from "vue";
+import { useStore } from "vuex";
 import DayS from "@/views/components/Day.vue";
 export default {
   name: "month",
   components: {
     DayS,
+  },
+  setup() {
+    const store = useStore();
+    onMounted(() => {
+      const getRecruitmentData = async () => {
+        await store.dispatch("root/getRecruitmentData").then((response) => {
+          console.log(response);
+        });
+      };
+      getRecruitmentData();
+    });
   },
 };
 </script>

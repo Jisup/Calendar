@@ -65,7 +65,6 @@ export default {
     setRecruit(props.start, "시");
     setRecruit(props.end, "끝");
 
-    console.log(state.recruit);
     return {
       state,
     };

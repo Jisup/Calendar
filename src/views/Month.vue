@@ -1,9 +1,9 @@
 <template>
   <div class="calendar">
     <div class="calendar-title">
-      <div class="calendar-title-prev-btn">&lt;</div>
+      <div class="calendar-title-prev-btn" @click="prevBtn">&lt;</div>
       <div class="calendar-title-date">2021.09</div>
-      <div class="calendar-title-next-btn">&gt;</div>
+      <div class="calendar-title-next-btn" @click="nextBtn">&gt;</div>
     </div>
     <div class="month">
       <div class="week">
@@ -109,7 +109,6 @@ export default {
         };
         state.days.push(data);
       }
-      console.log(state.days);
     };
     setDays(_today);
 
@@ -145,10 +144,8 @@ export default {
       };
       getRecruitmentData();
     });
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 데이터 셋 불러오기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     const setDaysData = () => {
-      // 1. 일수에 맞춰서 데이터 넣기
-      // 2. 어떻게 넣을꺼니?
-      // 3. [{ year: year, month: month, day:day, start, end}]
       state.days.forEach((_item) => {
         let _item_month = _item.month < 10 ? "0" + _item.month : _item.month;
         let _item_day = _item.day < 10 ? "0" + _item.day : _item.day;
@@ -173,7 +170,6 @@ export default {
         };
         state.datas.push(_day_data);
       });
-      console.log(state.datas);
     };
 
     return { state, setDaysData };

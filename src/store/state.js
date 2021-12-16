@@ -1,4 +1,6 @@
 export default {
+  today: "",
+  select_day: "",
   Jan: {
     start: [],
     end: [],

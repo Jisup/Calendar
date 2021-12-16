@@ -38,46 +38,67 @@ export default {
       days: [],
     });
     const _today = new Date(); // 현재 날짜
+    const _ary_month = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
 
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 날짜 넣기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     const setDays = (_today) => {
       const _today_year = _today.getFullYear(); // 현재 년도 가져오기
       const _today_month = _today.getMonth() + 1; // 현재 월 가져오기
       const _today_first = new Date(_today_year, _today_month - 1, 1); // 현재 월 1일
-      const _today_last = new Date(_today_year, _today_month, 0); // 현재 월 마지막일
-      const _yet_last = new Date(_today_year, _today_month - 1, 0); // 현재 전월 마지막일
+      const _today_day_last = new Date(_today_year, _today_month, 0); // 현재 월 마지막일
+      const _prev_day_last = new Date(_today_year, _today_month - 1, 0); // 현재 전월 마지막일
 
-      for (let i = _today_first.getDate(); i <= _today_last.getDate(); i++) {
+      console.log(_today_month);
+
+      const _prev_month_data = "";
+      const _today_month_data = "";
+      const _next_month_data = "";
+
+      for (
+        let i = _today_first.getDate();
+        i <= _today_day_last.getDate();
+        i++
+      ) {
         state.days.push(i); // 전체 일 수 날짜 넣기
       }
       for (let i = 0; i < _today_first.getDay(); i++) {
-        state.days.unshift(_yet_last.getDate() - i); // 모자란 앞 일 채우기
+        state.days.unshift(_prev_day_last.getDate() - i); // 모자란 앞 일 채우기
       }
-      for (let i = 1; i <= 6 - _today_last.getDay(); i++) {
+      for (let i = 1; i <= 6 - _today_day_last.getDay(); i++) {
         state.days.push(i); // 모자란 뒷 일 채우기
       }
       console.log(state.days);
     };
     setDays(_today);
 
+    // 1. 일수에 맞춰서 데이터 넣기
+    // 2. 어떻게 넣을꺼니?
+    // 3. [{ year: year, month: month, day:day, start, end}]
+
     onMounted(() => {
       //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 데이터 셋 저장하기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
       const setRecruitmentData = (_recruitment_data) => {
         const _now_year = _today.getFullYear();
-        const _set_date = [
-          ["Jan", _now_year + "-01"],
-          ["Feb", _now_year + "-02"],
-          ["Mar", _now_year + "-03"],
-          ["Apr", _now_year + "-04"],
-          ["May", _now_year + "-05"],
-          ["Jun", _now_year + "-06"],
-          ["Jul", _now_year + "-07"],
-          ["Aug", _now_year + "-08"],
-          ["Sep", _now_year + "-09"],
-          ["Oct", _now_year + "-10"],
-          ["Nov", _now_year + "-11"],
-          ["Dec", _now_year + "-12"],
-        ];
+        const _set_dates = [];
+        for (let i = 1; i <= 12; i++) {
+          i > 9
+            ? _set_dates.push([_ary_month[i - 1], _now_year + "-" + i])
+            : _set_dates.push([_ary_month[i - 1], _now_year + "-0" + i]);
+        }
+        console.log(_set_dates);
         for (let i = 0; i < _set_date.length; i++) {
           const _month_start = _recruitment_data.filter((_item) => {
             return _item.start_time.includes(_set_date[i][1]);

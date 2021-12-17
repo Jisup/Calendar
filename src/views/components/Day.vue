@@ -11,13 +11,14 @@
         :image="re.image"
         :start_time="re.start_time"
         :end_time="re.end_time"
-        :state="re.state"
+        :state_type="re.state_type"
+        @open="openModal"
       ></recruit-ment>
     </div>
   </div>
 </template>
 <script>
-import "@/style/Day.scss";
+import "@/style/Day.css";
 import RecruitMent from "./components/Recruitment.vue";
 import { reactive, watch } from "vue";
 export default {
@@ -32,7 +33,7 @@ export default {
     start: Array,
     end: Array,
   },
-  setup(props) {
+  setup(props, { emit }) {
     const state = reactive({
       recruit: [],
     });
@@ -40,9 +41,9 @@ export default {
     const setRecruit = (_data, _type) => {
       var _temp = [];
       _data.forEach((_item) => {
-        /* 
+        /*
           새롭게 json데이터를 만들어주지않고 직접적으로 json.state로 처리할경우
-          후순위에 적용한 데이터만 삽입된다. 
+          후순위에 적용한 데이터만 삽입된다.
         */
         let _empty = {
           id: _item.id,
@@ -51,7 +52,7 @@ export default {
           image: _item.image,
           start_time: _item.start_time,
           end_time: _item.end_time,
-          state: _type,
+          state_type: _type,
         };
         _temp.push(_empty);
       });
@@ -64,7 +65,7 @@ export default {
     };
     setRecruit(props.start, "시");
     setRecruit(props.end, "끝");
-    /* 
+    /*
         Maximum recursive updates exceeded in component<day>. This means you
         have a reactive effect that is mutating its own dependencies and thus
         recursively triggering itself. Possible sources include component template,
@@ -84,8 +85,13 @@ export default {
       }
     );
 
+    const openModal = (_recruit_data) => {
+      emit("open", _recruit_data);
+    };
+
     return {
       state,
+      openModal,
     };
   },
 };

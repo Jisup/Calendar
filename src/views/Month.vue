@@ -1,4 +1,4 @@
-<template>
+<template lang="">
   <div class="calendar">
     <div class="calendar-title">
       <div class="calendar-title-prev-btn" @click="prevBtn">&lt;</div>
@@ -24,10 +24,16 @@
           :day="data.day"
           :start="data.start"
           :end="data.end"
+          @open="openModal"
         >
         </day-s>
       </div>
     </div>
+    <Modal
+      v-if="state.modal"
+      :modal_data="state.modal_data"
+      @close="closeModal"
+    ></Modal>
   </div>
 </template>
 
@@ -36,10 +42,12 @@ import "@/style/Month.css";
 import { onMounted, reactive } from "vue";
 import { useStore } from "vuex";
 import DayS from "@/views/components/Day.vue";
+import Modal from "@/views/components/components/components/Modal.vue";
 export default {
   name: "month",
   components: {
     DayS,
+    Modal,
   },
   setup() {
     const store = useStore();
@@ -47,6 +55,8 @@ export default {
       year: "",
       days: [],
       datas: [],
+      modal: false,
+      modal_data: {},
     });
     const _today = new Date("2021-09-01"); // 현재 날짜
     const _today_month = _today.getMonth() + 1; // 현재 월
@@ -219,7 +229,14 @@ export default {
       store.commit("root/setSelectDay", _now_next_date);
     };
 
-    return { state, setDaysData, prevBtn, nextBtn };
+    const openModal = (_recruit_data) => {
+      state.modal_data = _recruit_data;
+      state.modal = true;
+    };
+    const closeModal = () => {
+      state.modal = false;
+    };
+    return { state, setDaysData, prevBtn, nextBtn, openModal, closeModal };
   },
 };
 </script>

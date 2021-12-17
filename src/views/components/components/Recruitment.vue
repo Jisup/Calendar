@@ -1,7 +1,8 @@
 <template>
-  <div class="recruit-modal">{{ state }}-{{ name }}</div>
+  <div class="recruit-title">{{ state }}-{{ name }}</div>
 </template>
 <script>
+import "@/style/Recruitment.css";
 export default {
   name: "recruitment",
   props: {

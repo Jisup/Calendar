@@ -11,7 +11,7 @@
         :image="re.image"
         :start_time="re.start_time"
         :end_time="re.end_time"
-        :state="re.state"
+        :state_type="re.state_type"
       ></recruit-ment>
     </div>
   </div>
@@ -51,7 +51,7 @@ export default {
           image: _item.image,
           start_time: _item.start_time,
           end_time: _item.end_time,
-          state: _type,
+          state_type: _type,
         };
         _temp.push(_empty);
       });

@@ -39,6 +39,11 @@
   color: #a5a5a5;
 }
 
+.calendar .calendar-title .calendar-title-prev-btn:hover,
+.calendar .calendar-title .calendar-title-next-btn:hover {
+  cursor: pointer;
+}
+
 .calendar .month {
   width: 92.5%;
   display: -webkit-box;

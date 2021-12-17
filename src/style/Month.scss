@@ -23,6 +23,9 @@
     .calendar-title-prev-btn,
     .calendar-title-next-btn {
       color: rgb(165, 165, 165);
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
   .month {

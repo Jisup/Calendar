@@ -9,6 +9,7 @@
   -webkit-box-align: top;
       -ms-flex-align: top;
           align-items: top;
+  width: 100%;
 }
 
 .recruit-title .recruit-state {
@@ -45,5 +46,11 @@
 
 .recruit-title .back-darkgray {
   background-color: darkgray;
+}
+
+.recruit-title:hover {
+  cursor: pointer;
+  color: white;
+  background-color: gray;
 }
 /*# sourceMappingURL=Recruitment.css.map */

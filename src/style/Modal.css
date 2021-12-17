@@ -32,13 +32,8 @@
   border-radius: 50%;
 }
 
-.modal .modal-inner .modal-btn-anchor {
-  position: absolute;
-  bottom: 1em;
-  right: 1em;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
+.modal .modal-inner .modal-btn-close:hover {
+  cursor: pointer;
 }
 
 .modal .modal-inner .modal-top {

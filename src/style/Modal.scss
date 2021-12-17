@@ -22,14 +22,9 @@
       width: 18px;
       height: 18px;
       border-radius: 50%;
-    }
-    .modal-btn-anchor {
-      position: absolute;
-      bottom: 1em;
-      right: 1em;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
+      &:hover {
+        cursor: pointer;
+      }
     }
 
     .modal-top {

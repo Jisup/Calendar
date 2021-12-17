@@ -230,7 +230,6 @@ export default {
     };
 
     const openModal = (_recruit_data) => {
-      console.log(_recruit_data);
       state.modal_data = _recruit_data;
       state.modal = true;
     };

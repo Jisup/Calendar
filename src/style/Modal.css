@@ -20,6 +20,12 @@
   width: 50%;
   height: 30%;
   background-color: white;
-  overflow: scroll;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.modal .modal-inner::-webkit-scrollbar {
+  display: none;
 }
 /*# sourceMappingURL=Modal.css.map */

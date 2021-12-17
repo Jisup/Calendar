@@ -1,5 +1,18 @@
 <template>
-  <div class="modal">나는모달</div>
+  <div class="modal">
+    <div class="modal-inner">
+      <div>{{ modal_data.id }}</div>
+      <div>{{ modal_data.name }}</div>
+      <div>{{ modal_data.content }}</div>
+      <div>{{ modal_data.content }}</div>
+      <div>{{ modal_data.content }}</div>
+      <div>{{ modal_data.content }}</div>
+      <div>{{ modal_data.content }}</div>
+      <div>{{ modal_data.content }}</div>
+      <div>{{ modal_data.start_time }}</div>
+      <div>{{ modal_data.end_time }}</div>
+    </div>
+  </div>
 </template>
 <script>
 import "@/style/Modal.css";

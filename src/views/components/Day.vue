@@ -1,6 +1,9 @@
 <template>
   <div class="days">
-    <div class="day-title">{{ day }}</div>
+    <div class="day-title">
+      <span v-if="month == state.select_month.getMonth() + 1">{{ day }}</span>
+      <span v-else>{{ month }}/{{ day }}</span>
+    </div>
     <div class="day-content">
       <recruit-ment
         v-for="(re, index) in state.recruit"
@@ -20,7 +23,8 @@
 <script>
 import "@/style/Day.css";
 import RecruitMent from "./components/Recruitment.vue";
-import { reactive, watch } from "vue";
+import { useStore } from "vuex";
+import { reactive, computed, watch } from "vue";
 export default {
   name: "day",
   components: {
@@ -34,8 +38,10 @@ export default {
     end: Array,
   },
   setup(props, { emit }) {
+    const store = useStore();
     const state = reactive({
       recruit: [],
+      select_month: computed(() => store.getters["root/getSelectDay"]),
     });
 
     const setRecruit = (_data, _type) => {

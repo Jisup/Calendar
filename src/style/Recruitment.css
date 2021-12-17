@@ -1,1 +1,49 @@
-/* No CSS *//*# sourceMappingURL=Recruitment.css.map */
+.recruit-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: top;
+      -ms-flex-align: top;
+          align-items: top;
+}
+
+.recruit-title .recruit-state {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  min-width: 18px;
+  height: 18px;
+  margin: 0.125em 0.125em;
+  border-radius: 25%;
+}
+
+.recruit-title .recruit-state .recruit-state-type {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.recruit-title .recruit-name {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: left;
+  font-size: 16px;
+}
+
+.recruit-title .back-orange {
+  background-color: orange;
+}
+
+.recruit-title .back-darkgray {
+  background-color: darkgray;
+}
+/*# sourceMappingURL=Recruitment.css.map */

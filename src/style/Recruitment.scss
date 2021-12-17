@@ -1,2 +1,30 @@
 .recruit-title {
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  .recruit-state {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    min-width: 18px;
+    height: 18px;
+    margin: 0.125em 0.125em;
+    border-radius: 25%;
+    .recruit-state-type {
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+  .recruit-name {
+    justify-content: center;
+    text-align: left;
+    font-size: 16px;
+  }
+  & .back-orange {
+    background-color: orange;
+  }
+  & .back-darkgray {
+    background-color: darkgray;
+  }
 }

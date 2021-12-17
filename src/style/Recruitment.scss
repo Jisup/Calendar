@@ -1,0 +1,45 @@
+.recruit-title {
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  width: 100%;
+  .recruit-state {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    min-width: 18px;
+    height: 18px;
+    margin: 0.125em 0.125em;
+    border-radius: 25%;
+
+    color: black;
+    background-color: white;
+    transition: all 0.125s ease-out;
+
+    .recruit-state-type {
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+  .recruit-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    font-size: 16px;
+  }
+  & .back-orange {
+    background-color: orange;
+  }
+  & .back-darkgray {
+    background-color: darkgray;
+  }
+
+  &:hover {
+    cursor: pointer;
+    color: white;
+    background-color: gray;
+    transition: all 0.25s ease-out;
+  }
+}

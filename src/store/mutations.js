@@ -1,3 +1,9 @@
+export function setToday(state, data) {
+  state.today = data;
+}
+export function setSelectDay(state, data) {
+  state.select_day = data;
+}
 export function setMonthJan(state, data) {
   const _inputdata = {
     start: data.start,

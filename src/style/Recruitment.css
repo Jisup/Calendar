@@ -1,0 +1,68 @@
+.recruit-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: top;
+      -ms-flex-align: top;
+          align-items: top;
+  width: 100%;
+}
+
+.recruit-title .recruit-state {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  min-width: 18px;
+  height: 18px;
+  margin: 0.125em 0.125em;
+  border-radius: 25%;
+  color: black;
+  background-color: white;
+  -webkit-transition: all 0.125s ease-out;
+  transition: all 0.125s ease-out;
+}
+
+.recruit-title .recruit-state .recruit-state-type {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.recruit-title .recruit-name {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: left;
+  font-size: 16px;
+}
+
+.recruit-title .back-orange {
+  background-color: orange;
+}
+
+.recruit-title .back-darkgray {
+  background-color: darkgray;
+}
+
+.recruit-title:hover {
+  cursor: pointer;
+  color: white;
+  background-color: gray;
+  -webkit-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+}
+/*# sourceMappingURL=Recruitment.css.map */

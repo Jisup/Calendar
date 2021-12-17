@@ -1,9 +1,9 @@
-<template>
+<template lang="">
   <div class="calendar">
     <div class="calendar-title">
-      <div class="calendar-title-prev-btn">&lt;</div>
-      <div class="calendar-title-date">2021.09</div>
-      <div class="calendar-title-next-btn">&gt;</div>
+      <div class="calendar-title-prev-btn" @click="prevBtn">&lt;</div>
+      <div class="calendar-title-date">{{ state.year }}</div>
+      <div class="calendar-title-next-btn" @click="nextBtn">&gt;</div>
     </div>
     <div class="month">
       <div class="week">
@@ -16,9 +16,24 @@
         <div class="day">토</div>
       </div>
       <div class="daylist">
-        <day-s v-for="(day, index) in 31" :key="index" :date="day"> </day-s>
+        <day-s
+          v-for="(data, index) in state.datas"
+          :key="'days' + index"
+          :year="data.year"
+          :month="data.month"
+          :day="data.day"
+          :start="data.start"
+          :end="data.end"
+          @open="openModal"
+        >
+        </day-s>
       </div>
     </div>
+    <Modal
+      v-if="state.modal"
+      :modal_data="state.modal_data"
+      @close="closeModal"
+    ></Modal>
   </div>
 </template>
 
@@ -27,17 +42,30 @@ import "@/style/Month.css";
 import { onMounted, reactive } from "vue";
 import { useStore } from "vuex";
 import DayS from "@/views/components/Day.vue";
+import Modal from "@/views/components/components/components/Modal.vue";
 export default {
   name: "month",
   components: {
     DayS,
+    Modal,
   },
   setup() {
     const store = useStore();
     const state = reactive({
+      year: "",
       days: [],
+      datas: [],
+      modal: false,
+      modal_data: {},
     });
-    const _today = new Date(); // 현재 날짜
+    const _today = new Date("2021-09-01"); // 현재 날짜
+    const _today_month = _today.getMonth() + 1; // 현재 월
+    state.year =
+      _today.getFullYear() +
+      "." +
+      (_today_month < 10 ? "0" + _today_month : _today_month);
+    store.commit("root/setToday", _today);
+    store.commit("root/setSelectDay", _today);
     const _ary_month = [
       "Jan",
       "Feb",
@@ -55,6 +83,7 @@ export default {
 
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 날짜 넣기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     const setDays = (_today) => {
+      state.days = [];
       const _today_year = _today.getFullYear(); // 현재 년도 가져오기
       const _today_month = _today.getMonth() + 1; // 현재 월 가져오기
       const _today_first = new Date(_today_year, _today_month - 1, 1); // 현재 월 1일
@@ -99,7 +128,6 @@ export default {
         };
         state.days.push(data);
       }
-      console.log(state.days);
     };
     setDays(_today);
 
@@ -130,25 +158,85 @@ export default {
       const getRecruitmentData = async () => {
         await store.dispatch("root/getRecruitmentData").then((response) => {
           setRecruitmentData(response.data);
+          setDaysData();
         });
       };
       getRecruitmentData();
-
-      // const _prev_month_data =
-      //   store.getters["root/getMonth" + _ary_month[_today_month - 1]];
-      // const _today_month_data =
-      //   store.getters["root/getMonth" + _ary_month[_today_month - 1]];
-      // const _next_month_data =
-      //   store.getters["root/getMonth" + _ary_month[_today_month + 1]];
-
-      // console.log(_today_month_data);
-
-      // 1. 일수에 맞춰서 데이터 넣기
-      // 2. 어떻게 넣을꺼니?
-      // 3. [{ year: year, month: month, day:day, start, end}]
     });
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 데이터 셋 불러오기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    const setDaysData = () => {
+      state.datas = [];
+      state.days.forEach((_item) => {
+        let _item_month = _item.month < 10 ? "0" + _item.month : _item.month;
+        let _item_day = _item.day < 10 ? "0" + _item.day : _item.day;
+        let _month_data =
+          store.getters["root/getMonth" + _ary_month[_item.month - 1]];
+        let _day_start_data = _month_data.start.filter((_month_item) => {
+          return _month_item.start_time.includes(
+            _item.year + "-" + _item_month + "-" + _item_day
+          );
+        });
+        let _day_end_data = _month_data.end.filter((_month_item) => {
+          return _month_item.end_time.includes(
+            _item.year + "-" + _item_month + "-" + _item_day
+          );
+        });
+        let _day_data = {
+          year: _item.year,
+          month: _item.month,
+          day: _item.day,
+          start: _day_start_data,
+          end: _day_end_data,
+        };
+        state.datas.push(_day_data);
+      });
+    };
+    const prevBtn = () => {
+      let _now_month = store.getters["root/getSelectDay"];
+      let _now_prev_year = _now_month.getFullYear();
+      let _now_prev_month = _now_month.getMonth();
+      if (_now_prev_month == 0) {
+        _now_prev_year -= 1;
+        _now_prev_month = 12;
+      }
+      _now_prev_month =
+        _now_prev_month > 9 ? _now_prev_month : "0" + _now_prev_month;
+      let _now_prev_date = new Date(
+        _now_prev_year + "-" + _now_prev_month + "-" + "01"
+      );
+      state.year = _now_prev_year + "." + _now_prev_month;
+      setDays(_now_prev_date);
+      setDaysData();
+      store.commit("root/setSelectDay", _now_prev_date);
+    };
 
-    return { state };
+    const nextBtn = () => {
+      let _now_month = store.getters["root/getSelectDay"];
+      let _now_next_year = _now_month.getFullYear();
+      let _now_next_month = _now_month.getMonth() + 2;
+      if (_now_next_month > 12) {
+        _now_next_year += 1;
+        _now_next_month = 1;
+      }
+      _now_next_month =
+        _now_next_month > 9 ? _now_next_month : "0" + _now_next_month;
+      let _now_next_date = new Date(
+        _now_next_year + "-" + _now_next_month + "-" + "01"
+      );
+      state.year = _now_next_year + "." + _now_next_month;
+      setDays(_now_next_date);
+      setDaysData();
+      store.commit("root/setSelectDay", _now_next_date);
+    };
+
+    const openModal = (_recruit_data) => {
+      state.modal_data = _recruit_data;
+      state.modal = true;
+    };
+    const closeModal = () => {
+      state.modal = false;
+    };
+    return { state, setDaysData, prevBtn, nextBtn, openModal, closeModal };
   },
 };
 </script>

@@ -14,4 +14,9 @@
   padding: 0.25em 0;
   background: whitesmoke;
 }
+
+.days .day-content {
+  padding: 0.25em 0.125em;
+  min-height: 2em;
+}
 /*# sourceMappingURL=Day.css.map */

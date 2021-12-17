@@ -1,6 +1,12 @@
 <template lang="">
   <div class="recruit-title" @click="openModal">
-    {{ state_type }}-{{ name }}
+    <div v-if="state_type == '시'" class="recruit-state back-orange">
+      <span class="recruit-state-type">{{ state_type }}</span>
+    </div>
+    <div v-else class="recruit-state back-darkgray">
+      <span class="recruit-state-type">{{ state_type }}</span>
+    </div>
+    <div class="recruit-name">{{ name }}</div>
   </div>
 </template>
 <script>

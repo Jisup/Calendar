@@ -2,27 +2,11 @@
   <div class="recruit-title" @click="openModal">
     {{ state_type }}-{{ name }}
   </div>
-  <Modal
-    v-model="state.modal"
-    :id="id"
-    :name="name"
-    :content="content"
-    :image="image"
-    :start_time="start_time"
-    :end_time="end_time"
-    :state_type="state_type"
-    @close="closeModal"
-  ></Modal>
 </template>
 <script>
 import "@/style/Recruitment.css";
-import { reactive } from "vue";
-import Modal from "./components/Modal.vue";
 export default {
   name: "recruitment",
-  components: {
-    Modal,
-  },
   props: {
     id: Number,
     name: String,
@@ -32,21 +16,20 @@ export default {
     end_time: String,
     state_type: String,
   },
-  setup() {
-    const state = reactive({
-      modal: false,
-    });
+  setup(props, { emit }) {
     const openModal = () => {
-      state.modal = true;
+      let _emit_data = {
+        id: props.id,
+        name: props.name,
+        content: props.content,
+        image: props.image,
+        start_time: props.start_time,
+        end_time: props.end_time,
+        state_type: props.state_type,
+      };
+      emit("open", _emit_data);
     };
-    const closeModal = () => {
-      state.modal = false;
-    };
-    return {
-      state,
-      openModal,
-      closeModal,
-    };
+    return { openModal };
   },
 };
 </script>

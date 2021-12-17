@@ -5,6 +5,13 @@
 import "@/style/Modal.css";
 export default {
   name: "modal",
-  setup() {},
+  props: {
+    modal_data: Object,
+  },
+  setup(props) {
+    console.log(props);
+    console.log(props.modal_data);
+    console.log(props.modal_data.name);
+  },
 };
 </script>

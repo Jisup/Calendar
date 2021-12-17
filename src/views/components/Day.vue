@@ -12,6 +12,7 @@
         :start_time="re.start_time"
         :end_time="re.end_time"
         :state_type="re.state_type"
+        @open="openModal"
       ></recruit-ment>
     </div>
   </div>
@@ -32,7 +33,7 @@ export default {
     start: Array,
     end: Array,
   },
-  setup(props) {
+  setup(props, { emit }) {
     const state = reactive({
       recruit: [],
     });
@@ -84,8 +85,13 @@ export default {
       }
     );
 
+    const openModal = (_recruit_data) => {
+      emit("open", _recruit_data);
+    };
+
     return {
       state,
+      openModal,
     };
   },
 };

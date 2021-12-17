@@ -12,6 +12,10 @@
     margin: 0.125em 0.125em;
     border-radius: 25%;
 
+    color: black;
+    background-color: white;
+    transition: all 0.125s ease-out;
+
     .recruit-state-type {
       color: white;
       font-size: 14px;
@@ -34,5 +38,6 @@
     cursor: pointer;
     color: white;
     background-color: gray;
+    transition: all 0.25s ease-out;
   }
 }

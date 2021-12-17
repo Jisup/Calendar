@@ -24,6 +24,10 @@
   height: 18px;
   margin: 0.125em 0.125em;
   border-radius: 25%;
+  color: black;
+  background-color: white;
+  -webkit-transition: all 0.125s ease-out;
+  transition: all 0.125s ease-out;
 }
 
 .recruit-title .recruit-state .recruit-state-type {
@@ -52,5 +56,7 @@
   cursor: pointer;
   color: white;
   background-color: gray;
+  -webkit-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
 }
 /*# sourceMappingURL=Recruitment.css.map */

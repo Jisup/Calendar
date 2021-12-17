@@ -82,6 +82,8 @@
   -ms-flex-pack: distribute;
       justify-content: space-around;
   text-align: left;
+  font-size: 0.925em;
+  font-weight: bold;
 }
 
 .modal .modal-inner .bottom {
@@ -106,5 +108,11 @@
 .modal .modal-inner .bottom .modal-content > p > img,
 .modal .modal-inner .bottom .modal-content > p > b > span > img {
   width: 100% !important;
+}
+
+.modal-date-during-time {
+  margin-left: 0.5em;
+  color: orange;
+  font-weight: bold;
 }
 /*# sourceMappingURL=Modal.css.map */

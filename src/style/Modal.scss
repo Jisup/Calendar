@@ -52,6 +52,8 @@
         flex-direction: column;
         justify-content: space-around;
         text-align: left;
+        font-size: 0.925em;
+        font-weight: bold;
       }
     }
 
@@ -77,4 +79,10 @@
       }
     }
   }
+}
+
+.modal-date-during-time {
+  margin-left: 0.5em;
+  color: orange;
+  font-weight: bold;
 }
